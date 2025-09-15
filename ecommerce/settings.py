@@ -74,11 +74,12 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
-LOGIN_REDIRECT_URL = "http://localhost:3000/"  # your frontend page
+LOGIN_REDIRECT_URL = "http://127.0.0.1:3000"  # your frontend page
 LOGOUT_REDIRECT_URL = "http://localhost:3000/login"  # after logout
 
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     "allauth.account.middleware.AccountMiddleware",
@@ -87,7 +88,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
 ]
 
@@ -115,10 +115,6 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-# Example (recommended to use env variables):
-SOCIAL_AUTH_GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "1016335976801-v6a8g79mffkohee7behiddib5ap5k3ed.apps.googleusercontent.com")
-SOCIAL_AUTH_GOOGLE_SECRET = os.getenv("GOOGLE_SECRET", "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")
-
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
@@ -127,7 +123,12 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1:3000",
+    "http://localhost:3000",
+]
+
+CORS_ALLOW_CREDENTIALS = True
 
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
