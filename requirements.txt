@@ -11,6 +11,7 @@ dj-rest-auth>=3.2
 # Authentication & Social login
 django-allauth>=65.11
 PyJWT>=2.8
+cryptography>=41.0
 
 # Environment management
 python-dotenv>=1.1
