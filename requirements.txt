@@ -21,3 +21,6 @@ django-cors-headers>=4.0
 
 # Optional utilities
 requests>=2.32
+
+# Images
+Pillow>=10.0
