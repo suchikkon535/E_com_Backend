@@ -66,6 +66,17 @@ INSTALLED_APPS = [
     "dj_rest_auth",
 ]
 
+# settings.py
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',  # for cookie/session
+        'rest_framework.authentication.TokenAuthentication',    # for token auth
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
+
 
 SITE_ID = 1
 
@@ -129,6 +140,18 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+
+# Allow all headers your frontend might send
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "authorization",
+    "credentials",
+    "x-csrftoken",
+    "accept",
+    "origin",
+    "user-agent",
+    "x-requested-with",
+]
 
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]

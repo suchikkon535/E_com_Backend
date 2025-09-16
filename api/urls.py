@@ -9,3 +9,6 @@ urlpatterns = [
     path("update/<str:item_id>/", views.update_item, name="update_item"),
     path("items/<str:item_id>/", views.get_item_by_id, name="get_item_by_id"),
 ]
+
+# venv\Scripts\activate 
+# python manage.py runserver

@@ -5,6 +5,8 @@ from rest_framework import status
 from .models import Item, ItemImage
 from .serializers import ItemSerializer, ItemSingleImageSerializer
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 import os
 from django.conf import settings
 
@@ -125,8 +127,24 @@ def get_items_single_image(request):
 @api_view(["GET"])
 def get_item_by_id(request, item_id):
     try:
+        # Get the main item
         item = Item.objects.get(id=item_id)
-        serializer = ItemSerializer(item, context={"request": request})
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        item_serializer = ItemSerializer(item, context={"request": request})
+
+        # Get related items from the same category (excluding the current item)
+        related_items = Item.objects.filter(category=item.category).exclude(id=item.id)[:6]  
+        related_serializer = ItemSingleImageSerializer(
+            related_items, many=True, context={"request": request}
+        )
+
+        return Response(
+            {
+                "item": item_serializer.data,
+                "related_items": related_serializer.data,
+            },
+            status=status.HTTP_200_OK,
+        )
+
     except Item.DoesNotExist:
         return Response({"error": "Item not found"}, status=status.HTTP_404_NOT_FOUND)
+
